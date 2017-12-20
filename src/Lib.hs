@@ -25,8 +25,7 @@ data LispVal =
     | String String
     | Bool Bool
     | PrimitiveFunc ([LispVal] -> ThrowsError LispVal)
-    | Func { params :: [String], vararg :: (Maybe String),
-            body :: [LispVal], closure :: Env }
+    | Func { params :: [String], vararg :: (Maybe String), body :: [LispVal], closure :: Env }
     | IOFunc ([LispVal] -> IOThrowsError LispVal)
     | Port Handle
 
@@ -363,7 +362,7 @@ until_ pred prompt action = do
 -- runOne expr = primitiveBindings >>= flip evalAndPrint expr
 
 runRepl :: IO ()
-runRepl = primitiveBindings >>= until_ (== "quit") (readPrompt "Lisp>>> ") . evalAndPrint
+runRepl = primitiveBindings >>= until_ (== "quit") (readPrompt "Risp <^> ") . evalAndPrint
 
 --------------------------------------------------------------------------
 -- Variable Management
