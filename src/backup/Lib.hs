@@ -69,9 +69,9 @@ parseQuoted = do
 
 parseExpr :: Parser LispVal
 parseExpr = parseAtom <|> parseString <|> parseNumber <|> parseQuoted <|> do
-    char '('
+    char '['
     x <- try parseList <|> parseDottedList
-    char ')'
+    char ']'
     return x
 
 showVal :: LispVal -> String
@@ -80,9 +80,9 @@ showVal (Atom   name    ) = name
 showVal (Number contents) = show contents
 showVal (Bool   True    ) = "#t"
 showVal (Bool   False   ) = "#f"
-showVal (List   contents) = "(" ++ unwordsList contents ++ ")"
+showVal (List   contents) = "[" ++ unwordsList contents ++ "]"
 showVal (DottedList head tail) =
-    "(" ++ unwordsList head ++ " . " ++ showVal tail ++ ")"
+    "[" ++ unwordsList head ++ " . " ++ showVal tail ++ "]"
 showVal (PrimitiveFunc _) = "<primitive>"
 showVal (Func {params = args, vararg = varargs, body = body, closure = env}) =
     "(lambda (" ++ unwords (map show args) ++
@@ -362,7 +362,7 @@ until_ pred prompt action = do
 -- runOne expr = primitiveBindings >>= flip evalAndPrint expr
 
 runRepl :: IO ()
-runRepl = primitiveBindings >>= until_ (== "quit") (readPrompt "Risp <^> ") . evalAndPrint
+runRepl = primitiveBindings >>= until_ (== "quit") (readPrompt "[77] :: ") . evalAndPrint
 
 --------------------------------------------------------------------------
 -- Variable Management
