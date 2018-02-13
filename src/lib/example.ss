@@ -1,0 +1,1 @@
+[define [solve a b c] [+ a b]
