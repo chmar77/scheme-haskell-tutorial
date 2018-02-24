@@ -10,7 +10,7 @@ import System.IO
 import Data.IORef
 
 data LispVal =
-    Atom String
+    Atom String 
   | List [LispVal]
   | DottedList [LispVal] LispVal
   | Number Integer
